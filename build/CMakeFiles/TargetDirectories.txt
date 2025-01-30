@@ -1,0 +1,3 @@
+C:/Users/aniru/OneDrive - Carleton University/Documents/GitHub/raytracer/build/CMakeFiles/ImageGenerator.dir
+C:/Users/aniru/OneDrive - Carleton University/Documents/GitHub/raytracer/build/CMakeFiles/ALL_BUILD.dir
+C:/Users/aniru/OneDrive - Carleton University/Documents/GitHub/raytracer/build/CMakeFiles/ZERO_CHECK.dir
