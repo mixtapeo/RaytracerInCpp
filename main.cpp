@@ -3,12 +3,39 @@
 #include "vec3.h"
 #include "ray.h"
 
-color ray_color(const ray &r)
-{
+/*
+1. build main.cpp
+2. Windows: run with ./main.exe > image.ppm
+    2.5 Make sure UTF-8 encoded image.ppm; open with notepad and check encoding.
+3. open with ppm viewer (i used irfanViewer)
+*/
+double hit_sphere(const point3& center, double radius, const ray& r) {
+    vec3 oc = center - r.origin();
+    auto a = dot(r.direction(), r.direction());
+    auto b = -2.0 * dot(r.direction(), oc);
+    auto c = dot(oc, oc) - radius*radius;
+    auto discriminant = b*b - 4*a*c;
+
+    if (discriminant < 0) {
+        //normal ray misses sphere
+        return -1.0;
+    } else {
+        // nearest intersection
+        return (-b - std::sqrt(discriminant) ) / (2.0*a);
+    }
+}
+
+color ray_color(const ray& r) {
+    auto t = hit_sphere(point3(0,0,-1), 0.5, r);
+    if (t > 0.0) {
+        //Normal vector
+        vec3 N = unit_vector(r.at(t) - vec3(0,0,-1));
+        return 0.5*color(N.x()+1, N.y()+1, N.z()+1);
+    }
+
     vec3 unit_direction = unit_vector(r.direction());
-    auto a = 0.5 * (unit_direction.y() + 1.0);
-    // return lerp formula
-    return (1.0 - a) * color(1.0, 1.0, 1.0) + a * color(0.5, 0.7, 1.0);
+    auto a = 0.5*(unit_direction.y() + 1.0);
+    return (1.0-a)*color(1.0, 1.0, 1.0) + a*color(0.5, 0.7, 1.0);
 }
 
 int main()
@@ -35,7 +62,7 @@ int main()
     auto viewport_v = vec3(0, -viewport_height, 0);
 
     // Calculate the horizontal and vertical delta vectors from pixel to pixel.
-    auto pixel_delta_u = viewport_u / image_width;  // 
+    auto pixel_delta_u = viewport_u / image_width;  //
     auto pixel_delta_v = viewport_v / image_height; // down
 
     // Calculate the location of the upper left pixel.
