@@ -1,5 +1,6 @@
 # Raytracer in C++
 Path tracer in C++.
+![image](https://github.com/user-attachments/assets/6ffb89d5-e2d1-4f2a-9ab9-465089c04bdb)
 
 ## Setup
 1. Build main.cpp
